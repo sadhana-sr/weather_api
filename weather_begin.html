@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather</title>
+<!-- Don't forget to link to jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+	input{
+		margin: 10px 0px;
+		padding: 5px;
+	}
+	#forecast{
+		/*This div should not appear until the weather is returned.*/
+		display: none;
+	}
+	#forecast div{
+		width: 25vw;
+		border: 8px solid blue;
+		margin: 0 auto;
+		background: black;
+	}
+	img{
+		width:100%;
+	}
+
+</style>
+<script>
+var YourWeatherAppID = '4e3dbb1c0323a0d5896fed3cac3ea43a'  
+function gettingJSON(){
+
+	var location = "Ann Arbor";
+	var units = "imperial";
+	var city = $("#location").val();
+	var fahrenheit = $("#fahrenheit");
+	var celcius = $("#celcius");
+
+
+	if (city.length < 0) {
+	  location = city;
+	}
+
+	if (fahrenheit.is(":checked")) {
+	  units = "imperial";
+	}
+	if (celcius.is(":checked")) {
+	  units = "metric";
+	}
+
+	$("#forecast").show();   
+
+	  // You will need to update this query with the city, weather format (Celsius or Fahrenheit) and your OpenWeatherMap ID
+	   
+	  // Right now I have it set to Chicago.  The default should be Ann Arbor/Fahreheit.
+	let query = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&APPID=" + YourWeatherAppID + "&units=" + units;
+	console.log("Query is :" + query)
+
+	$.getJSON(query,function(json){
+		console.log(JSON.stringify(json));
+
+		// Use the OpenWeather API to return:
+		  //  the current temperature 
+		$("#temp").html(json["main"].temp);
+
+		  //  the high temperature for the day
+
+		$("#high").html(json["main"].temp_max);
+		  
+		//  the low temperature for the day
+
+		$("#tempImg").attr('src', "https://openweathermap.org/img/wn/" + json.weather[0]['icon']+ '@2x.png');
+
+		 //  the icon for the current weather.
+		 
+		$("#tempImg").attr('src', "https://openweathermap.org/img/wn/" + json.weather[0]['icon']+ '@2x.png');
+
+		$("#loc").html(location);
+  })}
+
+  
+  </script>		
+</head>
+
+</head>
+<body>
+	<!-- DO NOT CHANGE ANY CODE IN THE BODY OF THIS FILE. -->
+	<label for ="location">City:</label><input type = "text" id = "location"><br>
+	<input type = "radio" name = "temp" value = "imperial" id = "fahrenheit"> <label for = "fahrenheit">Fahrenheit</label><br>
+	<input type = "radio" name = "temp" value = "metric" id = "celcius"> <label for = "celcius">Celcius</label><br>
+
+	<button id = "getIt" onclick = " gettingJSON()">Get Weather</button>
+
+
+	<div id = "forecast">
+		<div>
+		<img id = "tempImg" src="" alt = "" title = "">
+		</div>
+		<p>The temperature in <span id = "loc"></span> is currently <span id = "temp"></span>.</p>
+		<p>The high today will be <span id = "high"></span> and the low will be <span id = "low"></span>.</p>
+		
+	</div>
+</body>
+</html>
