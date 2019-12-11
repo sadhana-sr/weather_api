@@ -35,7 +35,7 @@ function gettingJSON(){
 	var celcius = $("#celcius");
 
 
-	if (city.length < 0) {
+	if (city = city) {
 	  location = city;
 	}
 
@@ -66,8 +66,7 @@ function gettingJSON(){
 		$("#high").html(json["main"].temp_max);
 		  
 		//  the low temperature for the day
-
-		$("#tempImg").attr('src', "https://openweathermap.org/img/wn/" + json.weather[0]['icon']+ '@2x.png');
+		$("#low").html(json["main"].temp_min);
 
 		 //  the icon for the current weather.
 		 
